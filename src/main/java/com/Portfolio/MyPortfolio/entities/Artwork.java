@@ -1,30 +1,41 @@
 package com.Portfolio.MyPortfolio.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
 @Entity
 public class Artwork {
     @Id
-    @GeneratedValue
-    private long id;
-    private String name;
-    private String fileName;
-    private String fileType;
-    @Lob
-    private byte[] data;
-    
-    public Artwork() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "file_name")
+    private String fileName;
+
+    @Column(name = "file_type")
+    private String fileType;
+
+    @Lob
+    @Column(name = "data")
+    private byte[] data;
+
+    public Artwork() {
     }
 
-    public long getId() {
+    // Getters and setters
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,5 +70,4 @@ public class Artwork {
     public void setName(String name) {
         this.name = name;
     }
-
 }

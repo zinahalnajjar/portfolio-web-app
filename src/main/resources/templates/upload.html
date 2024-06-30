@@ -1,85 +1,67 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Bootstrap Example</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
- <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+    <title>Artworks</title>
+    <style>
+        .artwork-container {
+            list-style-type: none;
+            padding: 0;
+        }
+        .artwork-item {
+            margin-bottom: 20px;
+        }
+        .artwork-item img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
-
 <body>
-
-	<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      
-      
-	
-     
-      <a class="navbar-brand" href="#">My Portfolio</a>
+    <h1>Artworks</h1>
+    <ul class="artwork-container">
+        <li th:each="artwork : ${artworkList}" class="artwork-item">
+            <p th:text="${artwork.name}"></p>
+            <img th:src="'data:image/jpeg;base64,' + ${artwork.data}" alt="Artwork Image"/>
+        </li>
+    </ul>
+    
+    <h1>Upload Artwork</h1>
+    <form action="/uploadartwork" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="artworkNameInput">Name:</label>
+            <input type="text" id="artworkNameInput" name="artworkNameInput" required>
+        </div>
+        <div>
+            <label for="artworkfile">Artwork File:</label>
+            <input type="file" id="artworkfile" name="artworkfile" required>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+    <div th:if="${message != null}">
+        <p th:text="${message}"></p>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-    <ul class="nav navbar-nav">
-        <li ><a href="/">Home</a></li>
-        <li><a class="active" href="/ui/upload">Upload</a></li>
-       
-      </ul>
-      
-      
-    </div>
-  </div>
-</nav>
-
-
-
-	<div class="container">
-		<form action="/uploadartwork" method="post" enctype="multipart/form-data">
-
-
-			<h1>Upload ArtWork</h1>
-
-			<div th:if="${Message != null}" class="alert alert-success" th:text="${Message}" role="alert"></div>
-
-
-			<div class="form-group">
-			     
-				<label for="exampleInputEmail1">Name*:</label> <input type="text"
-					class="form-control" name="artworkNameInput" required
-					aria-describedby="emailHelp" placeholder="Enter name">
-
-			</div>
-				<div class="form-group">
-				    
-					<label for="pageSelectInput">Select Page</label>
-					<select class="form-control" id="pageSelectInput">
-                        <option>Home</option>
-                    </select>
-				</div>
-				<div class="form-group">
-				    
-					<label for="exampleFormControlFile1">ArtWork to Upload*:</label> <input
-					type="file" class="form-control-file" name="artworkfile" required>
-			</div>
-					<button class="button button1">Upload</button>
-		</form>
-
-	</div>
-
-
 </body>
 
+<script>
+    document.getElementById('artworkfile').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.createElement('img');
+                preview.src = e.target.result;
+                preview.style.maxWidth = '100%';
+                preview.style.height = 'auto';
+                document.body.appendChild(preview);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+    </script>
+    
 </html>
+
+
+
+
+

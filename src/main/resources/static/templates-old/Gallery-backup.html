@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<style>
+		.nav  {
+		
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		text-align: center;
+		
+		}
+		
+		.nav li {
+		
+		display: inline-block;
+		
+		}
+		
+		.nav a{
+		color: #000000;
+		display:inline-block;
+		padding: 0.5em 0.75em;
+		background-color: #000000;
+		border-radius: 4px;
+		text-decoration: none;
+		
+		}
+		
+		.nav a:hover {
+		
+		background-color: #000;
+		
+		}
+		
+		.nav .active {
+		background-color: #FFB6C1; 
+		}
+		
+		
+		
+			body {
+			background:
+				
+				/* bottom, image */
+				url(images/background1.jpg);
+		}
+
+
+	</style>
+	
+	<body>
+	<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+      
+	
+      <a class="navbar-brand" href="#">My Portfolio</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li ><a href="/">Home</a></li>
+        <li><a href="/aboutPage">About</a></li>
+        <li><a class="active" href="/galleryPage">Gallery</a></li>
+        <li><a href="/contactPage">Contact</a></li>
+        
+      </ul>
+      
+      
+    </div>
+  </div>
+</nav>
+	
+	
+	
+	
+	
+		<span>
+            <div class="row">
+                <div class="col-sm-4" th:each="artwork: ${artworkList}">
+                    <a th:href="@{'/image/' + ${artwork.id}}"> 
+                    <img class="img-thumbnail" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(artwork.data)}" />
+                    </a>
+                </div>
+            </div>
+		</span>
+		
+		</body>
+	
+	</head>
+	</html>

@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class SimpleController {
 
-    private final static Logger logger = LoggerFactory.getLogger("SimpleController");
+    private final static Logger logger = LoggerFactory.getLogger(SimpleController.class);
 
     @Autowired
     private ArtworkRepository artworkRepository;
@@ -27,60 +27,35 @@ public class SimpleController {
     @GetMapping("/")
     public String homePage(Model model) {
         List<Artwork> artworkList = artworkRepository.findAll();
-        
         model.addAttribute("artworkList", artworkList);
         model.addAttribute("imgUtil", new ImageUtil());
         return "index";
-
     }
 
     @GetMapping("/ui/upload")
-    public String MyPortfolio(Model model) {
-
+    public String uploadPage(Model model) {
         return "upload";
-
     }
 
     @PostMapping("/uploadartwork")
-    public String uploadartwork(@RequestParam("artworkfile") MultipartFile file,
-            @RequestParam("artworkNameInput") String artworkNameInput, Model model) {
+    public String uploadArtwork(@RequestParam("artworkfile") MultipartFile file,
+                                @RequestParam("artworkNameInput") String artworkNameInput, Model model) {
         logger.info("Upload file name=" + artworkNameInput + ", size=" + file.getSize());
         try {
-            if (file != null || !file.isEmpty()) {
-                logger.info("uploading file...");
+            if (file != null && !file.isEmpty()) {
+                logger.info("Uploading file...");
                 Artwork artwork = new Artwork();
                 artwork.setData(file.getBytes());
                 artwork.setFileName(file.getOriginalFilename());
                 artwork.setName(artworkNameInput);
                 artwork.setFileType(file.getContentType());
                 artworkRepository.save(artwork);
-                model.addAttribute("Message", "upload successful");
+                model.addAttribute("Message", "Upload successful");
             }
         } catch (IOException e) {
-            logger.error("Error happend during uploading of artwork!", e);
-            model.addAttribute("Message", "upload error happened!");
+            logger.error("Error happened during uploading of artwork!", e);
+            model.addAttribute("Message", "Upload error happened!");
         }
         return "upload";
-
     }
-    
-    
-    @GetMapping("/galleryPage")
-    public String galleryPage(Model model) {
-    	List<Artwork> artworkList = artworkRepository.findAll();
-        
-        model.addAttribute("artworkList", artworkList);
-        model.addAttribute("imgUtil", new ImageUtil());
-        return "Gallery";
-
-    }
-    
-   
-    
-    
-    
-   
-
-    }
-
-
+}

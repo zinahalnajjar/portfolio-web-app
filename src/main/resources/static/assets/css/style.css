@@ -39,6 +39,13 @@ h1,h2,h3,h4,h5,h6 {
 	font-family: 'Poppins', sans-serif;
 	text-transform: capitalize;
 }
+.portfolio-info h4{
+    margin: 0;
+	color:#eaecf0;
+    font-size: 16px;
+	font-family: 'Poppins', sans-serif;
+	text-transform: capitalize;
+}
 p {
 	margin: 0;
 	line-height:1.8;
@@ -633,6 +640,7 @@ span.single-timeline-horizontal.spacial-horizontal-line {width: 88px;}
     display: block;
     width: 80%;
     max-width: 700px;
+    color: rgb(15, 8, 8);
 }
 .modal-content img {
     width: 100%;
@@ -642,7 +650,7 @@ span.single-timeline-horizontal.spacial-horizontal-line {width: 88px;}
     position: absolute;
     right: 35px;
     top: 50px;
-    color: #51248b;
+    color: #c5bfcc;
     font-size: 40px;
     font-weight: bold;
     transition: 0.3s;

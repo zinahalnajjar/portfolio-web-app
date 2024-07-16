@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Artworks</title>
+    <style>
+        .artwork-container {
+            list-style-type: none;
+            padding: 0;
+        }
+        .artwork-item {
+            margin-bottom: 20px;
+        }
+        .artwork-item img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Artworks</h1>
+    <ul class="artwork-container">
+        <li th:each="artwork : ${artworkList}" class="artwork-item">
+            <p th:text="${artwork.name}"></p>
+            <img th:src="'data:image/jpeg;base64,' + ${artwork.data}" alt="Artwork Image"/>
+        </li>
+    </ul>
+    
+    <h1>Upload Artwork</h1>
+    <form action="/uploadartwork" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="artworkNameInput">Name:</label>
+            <input type="text" id="artworkNameInput" name="artworkNameInput" required>
+        </div>
+        <div>
+            <label for="artworkfile">Artwork File:</label>
+            <input type="file" id="artworkfile" name="artworkfile" required>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+    <div th:if="${message != null}">
+        <p th:text="${message}"></p>
+    </div>
+</body>
+
+<script>
+    document.getElementById('artworkfile').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.createElement('img');
+                preview.src = e.target.result;
+                preview.style.maxWidth = '100%';
+                preview.style.height = 'auto';
+                document.body.appendChild(preview);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+    </script>
+    
+</html>
+
+
+
+
+
